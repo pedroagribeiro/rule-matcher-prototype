@@ -1,0 +1,35 @@
+[
+  {
+    "firmwareVersion": "gt 1.0.0",
+    "ipAddress": null,
+    "olt": null,
+    "card": null,
+    "cardInterface": null,
+    "equipmentId": null,
+    "password": null,
+    "vendor": null,
+    "template": "template_1.yml"
+  },
+  {
+    "firmwareVersion": null,
+    "ipAddress": "eq 192.168.1.6",
+    "olt": "OLT2T2",
+    "card": null,
+    "cardInterface": null,
+    "equipmentId": null,
+    "password": null,
+    "vendor": null,
+    "template": "template_2.yml"
+  },
+  {
+    "firmwareVersion": null,
+    "ipAddress": null,
+    "olt": "OLT2T2",
+    "card": "CARD-TYPE-1",
+    "cardInterface": null,
+    "equipmentId": null,
+    "password": null,
+    "vendor": null,
+    "template": "template_2.yml"
+  }
+]

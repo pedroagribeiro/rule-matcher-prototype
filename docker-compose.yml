@@ -1,0 +1,15 @@
+version: "3"
+
+services:
+  rules_database:
+    build:
+      context: ./database/
+    container_name: rule-matcher-db
+    ports:
+      - "5432:5432"
+  rule_matcher:
+    build:
+      context: .
+    container_name: rule-matcher
+    ports:
+      - "8080:8080"
