@@ -1,0 +1,13 @@
+version: "3"
+
+services:
+  rules_database:
+    image: 10.112.106.236:32500/ztp-onu-rules-db:1.0
+    container_name: rule-matcher-db
+    ports:
+      - "5432:5432"
+  rule_matcher:
+    image: 10.112.106.236:32500/ztp-onu-rule-matcher-prototype:1.0
+    container_name: rule-matcher
+    ports:
+      - "8080:8080"
