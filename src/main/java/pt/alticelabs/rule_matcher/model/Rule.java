@@ -49,9 +49,13 @@ public class Rule {
     @Column(name = "template")
     private String template;
 
+    @Column(name = "priority", nullable = false)
+    private int priority;
+
+
     public Rule() {}
 
-    public Rule(String firmwareVersion, String ipAddress, String olt, String card, String cardInterface, String equipmentId, String password, String vendor, String template) {
+    public Rule(String firmwareVersion, String ipAddress, String olt, String card, String cardInterface, String equipmentId, String password, String vendor, String template, int priority) {
         this.firmwareVersion = firmwareVersion;
         this.ipAddress = ipAddress;
         this.olt = olt;
@@ -61,6 +65,7 @@ public class Rule {
         this.password = password;
         this.vendor = vendor;
         this.template = template;
+        this.priority = priority;
     }
 
     public boolean validate() {
@@ -153,6 +158,14 @@ public class Rule {
         return this.template;
     }
 
+    public void setPriority(int priority) {
+        this.priority = priority;
+    }
+
+    public int getPriority() {
+        return this.priority;
+    }
+
     @Override
     public String toString() {
         return "Rule{" +
@@ -166,6 +179,7 @@ public class Rule {
             "password=" + password + ", " +
             "vendor=" + vendor + ", " +
             "template=" + template + ", " +
+            "priority=" + priority + ", " +
             "}";
     }
 
@@ -184,7 +198,8 @@ public class Rule {
             Objects.equals(equipmentId, rule.equipmentId) &&
             Objects.equals(password, rule.password) &&
             Objects.equals(vendor, rule.vendor) &&
-            Objects.equals(template, rule.template)
+            Objects.equals(template, rule.template) &&
+            priority == rule.priority
         );
     }
 
@@ -200,7 +215,8 @@ public class Rule {
             equipmentId,
             password,
             vendor,
-            template
+            template,
+            priority
         );
     }
 }
