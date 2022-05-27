@@ -7,7 +7,7 @@ import pt.alticelabs.rule_matcher.model.IpAddressRule;
 
 public class IpAddressGrammar {
 
-    private static ArrayList<String> allowed_definers = new ArrayList<>(Arrays.asList("eq"));
+    private static ArrayList<String> allowed_definers = new ArrayList<>(Arrays.asList("eq", "startswith", "endwith"));
     private static String ip_address_regex = "^(?:[0-9]{1,3}.){3}[0-9]{1,3}$";
    
     public static boolean expression_validator(String expression) {

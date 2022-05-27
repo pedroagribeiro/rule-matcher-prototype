@@ -23,6 +23,21 @@ public class Matcher {
         return false;
     }
 
+    private static boolean ip_address_checker(Rule rule, EquipmentScenary scenary) {
+        String[] ip_address_rule_splits = rule.getIpAddress().split(" ");
+        String definer = ip_address_rule_splits[0];
+        if(definer.equals("eq")) {
+            return scenary.getIpAddress().equals(ip_address_rule_splits[1]);
+        }
+        if(definer.equals("startswith")) {
+            return scenary.getIpAddress().startsWith(ip_address_rule_splits[1]);
+        }
+        if(definer.equals("endswith")) {
+            return scenary.getIpAddress().endsWith(ip_address_rule_splits[1]);
+        }
+        return false;
+    }
+
 
 
     
@@ -31,6 +46,11 @@ public class Matcher {
            if(!firmware_version_checker(rule, scenary)) {
                return false;
            }
+        }
+        if(rule.getIpAddress() != null) {
+            if(!ip_address_checker(rule, scenary)) {
+                return false;
+            }
         }
         if(rule.getOlt() != null) {
             if(!scenary.getOlt().equals(rule.getOlt())) {
