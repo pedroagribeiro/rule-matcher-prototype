@@ -45,11 +45,20 @@ public class RuleController {
 
     @GetMapping("/match")
     public ResponseEntity<?> matchEquipment(@Valid @RequestBody EquipmentScenary scenary) {
-        List<Rule> matching_rules = new ArrayList<>();
+        Rule matched_rule = null;
+        int currently_matched_parameters = 0;
         Iterable<Rule> rules = this.ruleRepository.findAll();
-        for(Rule r : rules) {
-            if(Matcher.match(r, scenary)) matching_rules.add(r);
+        for(Rule rule : rules) {
+            int matched_parameters = Matcher.match(rule, scenary);
+            if(matched_parameters > currently_matched_parameters) {
+                matched_rule = rule;
+                currently_matched_parameters = matched_parameters;
+            }
         }
-        return new ResponseEntity<>(matching_rules, HttpStatus.OK);
+        if(matched_rule == null) {
+            return new ResponseEntity<>("Could not find a matching rule", HttpStatus.NOT_FOUND);
+        } else {
+            return new ResponseEntity<>(matched_rule, HttpStatus.OK);
+        }
     }
 }

@@ -37,41 +37,39 @@ public class Matcher {
         }
         return false;
     }
-
-
-
     
-    public static boolean match(Rule rule, EquipmentScenary scenary) {
+    public static int match(Rule rule, EquipmentScenary scenary) {
+        int matched_parameters = 0;
         if(rule.getFirmwareVersion() != null) {
            if(!firmware_version_checker(rule, scenary)) {
-               return false;
+               matched_parameters++;
            }
         }
         if(rule.getIpAddress() != null) {
             if(!ip_address_checker(rule, scenary)) {
-                return false;
+                matched_parameters++;
             }
         }
         if(rule.getOlt() != null) {
             if(!scenary.getOlt().equals(rule.getOlt())) {
-                return false;
+                matched_parameters++;
             }
         }
         if(rule.getCardInterface() != null) {
             if(!scenary.getCardInterface().equals(rule.getCardInterface())) {
-                return false;
+                matched_parameters++;
             }
         }
         if(rule.getEquipmentId() != null) {
             if(!scenary.getEquipmentId().equals(rule.getEquipmentId())) {
-                return false;
+                matched_parameters++;
             }
         }
         if(rule.getPassword() != null) {
             if(!scenary.getPassword().equals(rule.getPassword())) {
-                return false;
+                matched_parameters++;
             }
         }
-        return true;
+        return matched_parameters;
     }
 }
