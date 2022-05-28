@@ -41,33 +41,45 @@ public class Matcher {
     public static int match(Rule rule, EquipmentScenary scenary) {
         int matched_parameters = 0;
         if(rule.getFirmwareVersion() != null) {
-           if(!firmware_version_checker(rule, scenary)) {
+           if(firmware_version_checker(rule, scenary)) {
                matched_parameters++;
+           } else {
+               return 0;
            }
         }
         if(rule.getIpAddress() != null) {
-            if(!ip_address_checker(rule, scenary)) {
+            if(ip_address_checker(rule, scenary)) {
                 matched_parameters++;
+            } else {
+                return 0;
             }
         }
         if(rule.getOlt() != null) {
-            if(!scenary.getOlt().equals(rule.getOlt())) {
+            if(scenary.getOlt().equals(rule.getOlt())) {
                 matched_parameters++;
+            } else {
+                return 0;
             }
         }
         if(rule.getCardInterface() != null) {
-            if(!scenary.getCardInterface().equals(rule.getCardInterface())) {
+            if(scenary.getCardInterface().equals(rule.getCardInterface())) {
                 matched_parameters++;
+            } else {
+                return 0;
             }
         }
         if(rule.getEquipmentId() != null) {
-            if(!scenary.getEquipmentId().equals(rule.getEquipmentId())) {
+            if(scenary.getEquipmentId().equals(rule.getEquipmentId())) {
                 matched_parameters++;
+            } else {
+                return 0;
             }
         }
         if(rule.getPassword() != null) {
-            if(!scenary.getPassword().equals(rule.getPassword())) {
+            if(scenary.getPassword().equals(rule.getPassword())) {
                 matched_parameters++;
+            } else {
+                return 0;
             }
         }
         return matched_parameters;
