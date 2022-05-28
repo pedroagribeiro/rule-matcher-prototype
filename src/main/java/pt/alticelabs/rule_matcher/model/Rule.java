@@ -1,17 +1,14 @@
 package pt.alticelabs.rule_matcher.model;
 
+import org.springframework.data.repository.query.Param;
 import pt.alticelabs.rule_matcher.utils.IpAddressGrammar;
 import pt.alticelabs.rule_matcher.utils.VersionGrammar;
 
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.SequenceGenerator;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @Entity
 @Table(name = "rules")
@@ -20,7 +17,7 @@ public class Rule {
     @Id
     @GeneratedValue(generator = "rule_id_seq", strategy = GenerationType.SEQUENCE)
     @SequenceGenerator(name = "rule_id_seq", sequenceName = "rule_id_seq", allocationSize = 1)
-    private int token;
+    private Long token;
 
     @Column(name = "fw_version")
     private String firmwareVersion;
@@ -52,10 +49,12 @@ public class Rule {
     @Column(name = "priority", nullable = false)
     private int priority;
 
+    @OneToMany(mappedBy = "rule", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    private Set<Parameter> parameters = new HashSet<>();
 
     public Rule() {}
 
-    public Rule(String firmwareVersion, String ipAddress, String olt, String card, String cardInterface, String equipmentId, String password, String vendor, String template, int priority) {
+    public Rule(String firmwareVersion, String ipAddress, String olt, String card, String cardInterface, String equipmentId, String password, String vendor, String template, int priority, Set<Parameter> parameters) {
         this.firmwareVersion = firmwareVersion;
         this.ipAddress = ipAddress;
         this.olt = olt;
@@ -66,6 +65,7 @@ public class Rule {
         this.vendor = vendor;
         this.template = template;
         this.priority = priority;
+        this.parameters = parameters;
     }
 
     public boolean validate() {
@@ -78,11 +78,11 @@ public class Rule {
         return true;
     }
 
-    public void setToken(int token) {
+    public void setToken(Long token) {
         this.token = token;
     }
 
-    public int getToken() {
+    public Long getToken() {
         return this.token;
     }
 
@@ -164,6 +164,14 @@ public class Rule {
 
     public int getPriority() {
         return this.priority;
+    }
+
+    public void setParameters(Set<Parameter> parameters) {
+        this.parameters = parameters;
+    }
+
+    public Set<Parameter> getParameters() {
+        return this.parameters;
     }
 
     @Override

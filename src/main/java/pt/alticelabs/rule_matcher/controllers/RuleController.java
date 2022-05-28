@@ -1,8 +1,12 @@
 package pt.alticelabs.rule_matcher.controllers;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import javax.validation.Valid;
+
+import com.google.gson.Gson;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import pt.alticelabs.rule_matcher.model.EquipmentScenary;
+import pt.alticelabs.rule_matcher.model.Parameter;
 import pt.alticelabs.rule_matcher.model.Rule;
 import pt.alticelabs.rule_matcher.repository.RuleRepository;
 import pt.alticelabs.rule_matcher.utils.Matcher;
@@ -23,6 +28,7 @@ import pt.alticelabs.rule_matcher.utils.Matcher;
 public class RuleController {
 
     Logger log = LoggerFactory.getLogger(this.getClass().getName());
+    Gson converter = new Gson();
 
     @Autowired RuleRepository ruleRepository;
 
@@ -34,8 +40,12 @@ public class RuleController {
 
     @PostMapping("")
     public ResponseEntity<?> saveRule(@RequestBody Rule rule) {
+        log.info(converter.toJson(rule));
         boolean valid = rule.validate();
         if(valid) {
+            for(Parameter p : rule.getParameters()) {
+                p.setRule(rule);
+            }
             this.ruleRepository.save(rule);
             return new ResponseEntity<>("Successfuly created the rule", HttpStatus.CREATED);
         } else {
