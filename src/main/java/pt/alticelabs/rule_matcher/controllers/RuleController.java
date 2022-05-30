@@ -1,11 +1,6 @@
 package pt.alticelabs.rule_matcher.controllers;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
 import javax.validation.Valid;
-
 import com.google.gson.Gson;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -28,7 +23,6 @@ import pt.alticelabs.rule_matcher.utils.Matcher;
 public class RuleController {
 
     Logger log = LoggerFactory.getLogger(this.getClass().getName());
-    Gson converter = new Gson();
 
     @Autowired RuleRepository ruleRepository;
 
@@ -40,7 +34,6 @@ public class RuleController {
 
     @PostMapping("")
     public ResponseEntity<?> saveRule(@RequestBody Rule rule) {
-        log.info(converter.toJson(rule));
         boolean valid = rule.validate();
         if(valid) {
             for(Parameter p : rule.getParameters()) {
