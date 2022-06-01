@@ -1,9 +1,9 @@
 package pt.alticelabs.rule_matcher.model;
 
-import org.springframework.data.repository.query.Param;
+import pt.alticelabs.rule_matcher.exceptions.InvalidFirmwareVersionExpressionException;
+import pt.alticelabs.rule_matcher.exceptions.InvalidIpAddressExpressionException;
 import pt.alticelabs.rule_matcher.utils.IpAddressGrammar;
 import pt.alticelabs.rule_matcher.utils.VersionGrammar;
-
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
@@ -68,14 +68,13 @@ public class Rule {
         this.parameters = parameters;
     }
 
-    public boolean validate() {
-        if(this.firmwareVersion != null && !VersionGrammar.expression_validator(this.firmwareVersion)) {
-            return false;
+    public void validate() throws InvalidFirmwareVersionExpressionException, InvalidIpAddressExpressionException {
+        if(this.firmwareVersion != null) {
+            VersionGrammar.expression_validator(this.firmwareVersion);
         }
-        if(this.ipAddress != null && !IpAddressGrammar.expression_validator(this.ipAddress)) {
-            return false;
+        if(this.ipAddress != null) {
+            IpAddressGrammar.expression_validator(this.ipAddress);
         }
-        return true;
     }
 
     public void setToken(Long token) {

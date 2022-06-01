@@ -4,11 +4,8 @@ import com.google.gson.Gson;
 import com.vdurmont.semver4j.Semver;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.util.StringUtils;
 import pt.alticelabs.rule_matcher.model.EquipmentScenary;
 import pt.alticelabs.rule_matcher.model.Rule;
-
-import javax.persistence.ManyToOne;
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -17,7 +14,7 @@ public class Matcher {
     static Logger log = LoggerFactory.getLogger("Matcher");
     static Gson converter = new Gson();
 
-    private static ArrayList<String> split_expression(String expression) {
+    public static ArrayList<String> split_expression(String expression) {
        ArrayList<String> tokens = new ArrayList<>(Arrays.asList("and", "or"));
        ArrayList<String> expression_parts = new ArrayList<>();
        boolean contains_and = expression.contains("and");
@@ -26,19 +23,19 @@ public class Matcher {
        if(contains_or) expression_parts.add("or");
        if(!contains_and && !contains_or) expression_parts.add("");
        String[] expression_bits = expression.split(" ");
-       String aggregator = "";
+       StringBuilder aggregator = new StringBuilder("");
        int k = 0;
        for(int i = 0; i < expression_bits.length; i++) {
             if(!tokens.contains(expression_bits[i])) {
                 if(k == 0) {
-                    aggregator += expression_bits[i];
-                    aggregator += " ";
+                    aggregator.append(expression_bits[i]);
+                    aggregator.append(" ");
                     k++;
-                }
-                if(k == 1) {
-                    aggregator += expression_bits[1];
-                    expression_parts.add(aggregator);
-                    aggregator = "";
+                } else {
+                    aggregator.append(expression_bits[i]);
+                    expression_parts.add(aggregator.toString());
+                    aggregator.setLength(0);
+                    aggregator.append("");
                     k = 0;
                 }
             }
@@ -46,7 +43,7 @@ public class Matcher {
        return expression_parts;
     }
 
-    private static boolean firmware_version_single_checker(String expression, EquipmentScenary scenary) {
+    public static boolean firmware_version_single_checker(String expression, EquipmentScenary scenary) {
         String[] firmware_rule_splits = expression.split(" ");
         String definer = firmware_rule_splits[0];
         Semver rule_firmware_version = new Semver(firmware_rule_splits[1]);
@@ -78,7 +75,7 @@ public class Matcher {
         return false;
     }
 
-    private static boolean ip_address_single_checker(String expression, EquipmentScenary scenary) {
+    public static boolean ip_address_single_checker(String expression, EquipmentScenary scenary) {
         String[] ip_address_rule_splits = expression.split(" ");
         String definer = ip_address_rule_splits[0];
         if(definer.equals("eq")) {
@@ -92,35 +89,36 @@ public class Matcher {
         }
         return false;
     }
-    private static boolean check_firmware_version_logic_and(ArrayList<String> expressions, EquipmentScenary scenary) {
+
+    public static boolean check_firmware_version_logic_and(ArrayList<String> expressions, EquipmentScenary scenary) {
        for(String expression : expressions) {
            if(!firmware_version_single_checker(expression, scenary)) return false;
        }
        return true;
     }
 
-    private static boolean check_firmware_version_logic_or(ArrayList<String> expressions, EquipmentScenary scenary) {
+    public static boolean check_firmware_version_logic_or(ArrayList<String> expressions, EquipmentScenary scenary) {
        for(String expression : expressions) {
            if(firmware_version_single_checker(expression, scenary)) return true;
        }
        return false;
     }
 
-    private static boolean check_ip_address_logic_and(ArrayList<String> expressions, EquipmentScenary scenary) {
+    public static boolean check_ip_address_logic_and(ArrayList<String> expressions, EquipmentScenary scenary) {
         for(String expression : expressions) {
             if(!ip_address_single_checker(expression, scenary)) return false;
         }
         return true;
     }
 
-    private static boolean check_ip_address_logic_or(ArrayList<String> expressions, EquipmentScenary scenary) {
+    public static boolean check_ip_address_logic_or(ArrayList<String> expressions, EquipmentScenary scenary) {
         for(String expression : expressions) {
             if(ip_address_single_checker(expression, scenary)) return true;
         }
         return false;
     }
 
-    private static boolean firmware_version_checker(Rule rule, EquipmentScenary scenary) {
+    public static boolean firmware_version_checker(Rule rule, EquipmentScenary scenary) {
         boolean r;
         String firmware_rule = rule.getFirmwareVersion();
         ArrayList<String> broken_down_firmware_rule = Matcher.split_expression(firmware_rule);
@@ -139,7 +137,7 @@ public class Matcher {
         return r;
     }
 
-    private static boolean ip_address_checker(Rule rule, EquipmentScenary scenary) {
+    public static boolean ip_address_checker(Rule rule, EquipmentScenary scenary) {
         boolean r;
         String ip_address_rule = rule.getIpAddress();
         ArrayList<String> broken_down_ip_address_rule = Matcher.split_expression(ip_address_rule);

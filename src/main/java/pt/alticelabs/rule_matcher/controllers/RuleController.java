@@ -1,7 +1,6 @@
 package pt.alticelabs.rule_matcher.controllers;
 
 import javax.validation.Valid;
-import com.google.gson.Gson;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +11,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import pt.alticelabs.rule_matcher.exceptions.InvalidFirmwareVersionExpressionException;
+import pt.alticelabs.rule_matcher.exceptions.InvalidIpAddressExpressionException;
 import pt.alticelabs.rule_matcher.model.EquipmentScenary;
 import pt.alticelabs.rule_matcher.model.Parameter;
 import pt.alticelabs.rule_matcher.model.Rule;
@@ -34,16 +36,20 @@ public class RuleController {
 
     @PostMapping("")
     public ResponseEntity<?> saveRule(@RequestBody Rule rule) {
-        boolean valid = rule.validate();
-        if(valid) {
-            for(Parameter p : rule.getParameters()) {
-                p.setRule(rule);
-            }
-            this.ruleRepository.save(rule);
-            return new ResponseEntity<>("Successfuly created the rule", HttpStatus.CREATED);
-        } else {
-            return new ResponseEntity<>("The syntax of the provided rule is not valid", HttpStatus.BAD_REQUEST);
+        log.info("Received version: " + rule.getFirmwareVersion());
+        log.info("Received ipAddress: " + rule.getIpAddress());
+        try {
+            rule.validate();
+        } catch(InvalidFirmwareVersionExpressionException e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+        } catch(InvalidIpAddressExpressionException e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
+        for(Parameter p : rule.getParameters()) {
+            p.setRule(rule);
+        }
+        this.ruleRepository.save(rule);
+        return new ResponseEntity<>("Successfuly created the rule", HttpStatus.CREATED);
     }
 
     @GetMapping("/match")
