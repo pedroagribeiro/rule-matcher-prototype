@@ -36,8 +36,6 @@ public class RuleController {
 
     @PostMapping("")
     public ResponseEntity<?> saveRule(@RequestBody Rule rule) {
-        log.info("Received version: " + rule.getFirmwareVersion());
-        log.info("Received ipAddress: " + rule.getIpAddress());
         try {
             rule.validate();
         } catch(InvalidFirmwareVersionExpressionException e) {
@@ -56,12 +54,21 @@ public class RuleController {
     public ResponseEntity<?> matchEquipment(@Valid @RequestBody EquipmentScenary scenary) {
         Rule matched_rule = null;
         int currently_matched_parameters = 0;
+        int current_priority = Integer.MAX_VALUE;
         Iterable<Rule> rules = this.ruleRepository.findAll();
         for(Rule rule : rules) {
-            int matched_parameters = Matcher.match(rule, scenary);
-            if(matched_parameters > currently_matched_parameters) {
+            int matched_params = Matcher.match(rule, scenary);
+            if((rule.getPriority() < current_priority) && matched_params > 0) {
                 matched_rule = rule;
-                currently_matched_parameters = matched_parameters;
+                currently_matched_parameters = Matcher.match(rule, scenary);
+                current_priority = rule.getPriority();
+            }
+            if((rule.getPriority() == current_priority) && matched_params > 0) {
+                int matched_parameters = Matcher.match(rule, scenary);
+                if(matched_parameters > currently_matched_parameters) {
+                    matched_rule = rule;
+                    currently_matched_parameters = matched_parameters;
+                }            
             }
         }
         if(matched_rule == null) {

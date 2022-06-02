@@ -25,6 +25,7 @@ public class VersionGrammar {
             boolean is_version_valid = expression_bits[1].matches(version_regex);
             if(!is_definer_valid || !is_version_valid) throw new InvalidFirmwareVersionExpressionException("The provided firmware version expression is not valid");
         }
+        if(single_expressions.size() == 0) throw new InvalidFirmwareVersionExpressionException("The provided firmware version expression is not valid");
     }
 
     public static VersionRule generate_version_rule_fields(String expression) {

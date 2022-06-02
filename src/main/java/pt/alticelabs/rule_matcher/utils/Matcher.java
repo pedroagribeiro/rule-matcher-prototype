@@ -44,17 +44,20 @@ public class Matcher {
     }
 
     public static boolean firmware_version_single_checker(String expression, EquipmentScenary scenary) {
+        log.info("Single expression: " + expression);
         String[] firmware_rule_splits = expression.split(" ");
         String definer = firmware_rule_splits[0];
         Semver rule_firmware_version = new Semver(firmware_rule_splits[1]);
         Semver equipment_firmware_version = new Semver(scenary.getFirmwareVersion());
         if(definer.equals("gt")) {
+            log.info("gt -> rule_fw_version: " + rule_firmware_version.toString() + "; equipment_fw_version: " + equipment_firmware_version.toString() + " ; rule: " + equipment_firmware_version.isGreaterThan(rule_firmware_version));
             return equipment_firmware_version.isGreaterThan(rule_firmware_version);
         }
         if(definer.equals("eq")) {
             return equipment_firmware_version.isEqualTo(rule_firmware_version);
         }
         if(definer.equals("lt")) {
+            log.info("lt -> rule_fw_version: " + rule_firmware_version.toString() + "; equipment_fw_version: " + equipment_firmware_version.toString() + " ; rule: " + equipment_firmware_version.isLowerThan(rule_firmware_version));
             return equipment_firmware_version.isLowerThan(rule_firmware_version);
         }
         if(definer.equals("startswith")) {
@@ -131,7 +134,6 @@ public class Matcher {
                 r = Matcher.check_firmware_version_logic_or(broken_down_firmware_rule, scenary);
                 break;
             default:
-                log.info("Expressao cortada: " + broken_down_firmware_rule);
                 r = firmware_version_single_checker(broken_down_firmware_rule.get(0), scenary);
         }
         return r;

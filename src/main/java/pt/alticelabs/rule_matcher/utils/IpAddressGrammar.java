@@ -23,6 +23,7 @@ public class IpAddressGrammar {
             }
             if(!is_definer_valid || !is_ip_address_valid) throw new InvalidIpAddressExpressionException("The provided ip address expression is not valid");
         }
+        if(single_expressions.size() == 0) throw new InvalidIpAddressExpressionException("The provided ip address expression is not valid");
     }
 
     public static IpAddressRule generate_ip_rule_fields(String expression) {
