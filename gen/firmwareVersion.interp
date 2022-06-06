@@ -1,0 +1,37 @@
+token literal names:
+null
+'eq'
+'gt'
+'lt'
+'major'
+'minor'
+'patch'
+null
+'and'
+'or'
+null
+null
+null
+
+token symbolic names:
+null
+EQUAL
+GREATER_THAN
+LOWER_THAN
+MAJOR
+MINOR
+PATCH
+NUMBER
+LOGIC_AND
+LOGIC_OR
+SEMANTIC_VERSION
+SEMANTIC_VERSION_EXPRESSION
+PARTIAL_SEMANTIC_VERSION_EXPRESSION
+
+rule names:
+expression
+complex_expression
+
+
+atn:
+[4, 1, 12, 12, 2, 0, 7, 0, 2, 1, 7, 1, 1, 0, 1, 0, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 2, 0, 2, 0, 2, 1, 0, 11, 12, 1, 0, 8, 9, 9, 0, 4, 1, 0, 0, 0, 2, 7, 1, 0, 0, 0, 4, 5, 7, 0, 0, 0, 5, 6, 5, 0, 0, 1, 6, 1, 1, 0, 0, 0, 7, 8, 7, 0, 0, 0, 8, 9, 7, 1, 0, 0, 9, 10, 3, 2, 1, 0, 10, 3, 1, 0, 0, 0, 0]
