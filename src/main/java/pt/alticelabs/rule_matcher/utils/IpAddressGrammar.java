@@ -1,29 +1,30 @@
 package pt.alticelabs.rule_matcher.utils;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-
+import org.antlr.v4.runtime.BailErrorStrategy;
+import org.antlr.v4.runtime.CharStream;
+import org.antlr.v4.runtime.CharStreams;
+import org.antlr.v4.runtime.CommonTokenStream;
+import org.antlr.v4.runtime.misc.ParseCancellationException;
+import pt.alticelabs.rule_matcher.antlr4.ipAddress.IpAddressLexer;
+import pt.alticelabs.rule_matcher.antlr4.ipAddress.IpAddressParser;
 import pt.alticelabs.rule_matcher.exceptions.InvalidIpAddressExpressionException;
 import pt.alticelabs.rule_matcher.model.IpAddressRule;
 
 public class IpAddressGrammar {
 
-    private static ArrayList<String> allowed_definers = new ArrayList<>(Arrays.asList("eq", "startswith", "endswith"));
-    private static String ip_address_regex = "^(?:[0-9]{1,3}.){3}[0-9]{1,3}$";
-   
-    public static void expression_validator(String expression) throws InvalidIpAddressExpressionException {
-        ArrayList<String> single_expressions = Matcher.split_expression(expression);
-        String definer = single_expressions.remove(0);
-        for(String single_expression : single_expressions) {
-            String[] expression_bits = single_expression.split(" ");
-            boolean is_definer_valid = allowed_definers.contains(expression_bits[0]);
-            boolean is_ip_address_valid = true;
-            if(definer.equals("eq")) {
-                is_ip_address_valid = expression_bits[1].matches(ip_address_regex);
-            }
-            if(!is_definer_valid || !is_ip_address_valid) throw new InvalidIpAddressExpressionException("The provided ip address expression is not valid");
+    public static void expression_validator(String expression_string) throws InvalidIpAddressExpressionException {
+        CharStream cs = CharStreams.fromString(expression_string);
+        IpAddressLexer ipLexer = new IpAddressLexer(cs);
+        CommonTokenStream commonTokenStream = new CommonTokenStream(ipLexer);
+        IpAddressParser ipAddressParser = new IpAddressParser(commonTokenStream);
+        ipAddressParser.removeErrorListeners();
+        ipAddressParser.setErrorHandler(new BailErrorStrategy());
+        try {
+            ipAddressParser.expression();
+            return;
+        } catch(ParseCancellationException e) {
+            throw new InvalidIpAddressExpressionException("The provided ip expression is not valid");
         }
-        if(single_expressions.size() == 0) throw new InvalidIpAddressExpressionException("The provided ip address expression is not valid");
     }
 
     public static IpAddressRule generate_ip_rule_fields(String expression) {

@@ -1,4 +1,6 @@
-// Generated from /Users/pedro/Code/rule_matcher/src/main/antlr4/ipAddress.g4 by ANTLR 4.10.1
+// Generated from /Users/pedro/Code/rule_matcher/src/main/antlr4/FirmwareVersion.g4 by ANTLR 4.10.1
+package pt.alticelabs.rule_matcher.antlr4.firmwareVersion;
+
 import org.antlr.v4.runtime.atn.*;
 import org.antlr.v4.runtime.dfa.DFA;
 import org.antlr.v4.runtime.*;
@@ -9,16 +11,16 @@ import java.util.Iterator;
 import java.util.ArrayList;
 
 @SuppressWarnings({"all", "warnings", "unchecked", "unused", "cast"})
-public class ipAddressParser extends Parser {
+public class FirmwareVersionParser extends Parser {
 	static { RuntimeMetaData.checkVersion("4.10.1", RuntimeMetaData.VERSION); }
 
 	protected static final DFA[] _decisionToDFA;
 	protected static final PredictionContextCache _sharedContextCache =
 		new PredictionContextCache();
 	public static final int
-		EQUAL=1, GREATER_THAN=2, LOWER_THAN=3, STARTSWITH=4, ENDSWITH=5, LOGIC_AND=6, 
-		LOGIC_OR=7, IP_ADDRESS_REGULAR_EXPRESSION=8, IP_ADDRESS_SINGLE_EXPRESSION=9, 
-		IP_ADDRESS_SINGLE_PARTIAL_EXPRESSION=10, WORD=11, WHITESPACE=12, NEWLINE=13;
+		EQUAL=1, GREATER_THAN=2, LOWER_THAN=3, MAJOR=4, MINOR=5, PATCH=6, NUMBER=7, 
+		LOGIC_AND=8, LOGIC_OR=9, SEMANTIC_VERSION=10, SEMANTIC_VERSION_EXPRESSION=11, 
+		PARTIAL_SEMANTIC_VERSION_EXPRESSION=12, WHITESPACE=13, NEWLINE=14;
 	public static final int
 		RULE_expression = 0, RULE_complex_expression = 1;
 	private static String[] makeRuleNames() {
@@ -30,16 +32,16 @@ public class ipAddressParser extends Parser {
 
 	private static String[] makeLiteralNames() {
 		return new String[] {
-			null, "'eq'", "'gt'", "'lt'", "'startswith'", "'endswith'", "'and'", 
-			"'or'", "'^(?:[0-9]{1,3}.){3}[0-9]{1,3}$'"
+			null, "'eq'", "'gt'", "'lt'", "'major'", "'minor'", "'patch'", null, 
+			"'and'", "'or'"
 		};
 	}
 	private static final String[] _LITERAL_NAMES = makeLiteralNames();
 	private static String[] makeSymbolicNames() {
 		return new String[] {
-			null, "EQUAL", "GREATER_THAN", "LOWER_THAN", "STARTSWITH", "ENDSWITH", 
-			"LOGIC_AND", "LOGIC_OR", "IP_ADDRESS_REGULAR_EXPRESSION", "IP_ADDRESS_SINGLE_EXPRESSION", 
-			"IP_ADDRESS_SINGLE_PARTIAL_EXPRESSION", "WORD", "WHITESPACE", "NEWLINE"
+			null, "EQUAL", "GREATER_THAN", "LOWER_THAN", "MAJOR", "MINOR", "PATCH", 
+			"NUMBER", "LOGIC_AND", "LOGIC_OR", "SEMANTIC_VERSION", "SEMANTIC_VERSION_EXPRESSION", 
+			"PARTIAL_SEMANTIC_VERSION_EXPRESSION", "WHITESPACE", "NEWLINE"
 		};
 	}
 	private static final String[] _SYMBOLIC_NAMES = makeSymbolicNames();
@@ -77,7 +79,7 @@ public class ipAddressParser extends Parser {
 	}
 
 	@Override
-	public String getGrammarFileName() { return "ipAddress.g4"; }
+	public String getGrammarFileName() { return "FirmwareVersion.g4"; }
 
 	@Override
 	public String[] getRuleNames() { return ruleNames; }
@@ -88,7 +90,7 @@ public class ipAddressParser extends Parser {
 	@Override
 	public ATN getATN() { return _ATN; }
 
-	public ipAddressParser(TokenStream input) {
+	public FirmwareVersionParser(TokenStream input) {
 		super(input);
 		_interp = new ParserATNSimulator(this,_ATN,_decisionToDFA,_sharedContextCache);
 	}
@@ -97,22 +99,22 @@ public class ipAddressParser extends Parser {
 		public Complex_expressionContext complex_expression() {
 			return getRuleContext(Complex_expressionContext.class,0);
 		}
-		public TerminalNode EOF() { return getToken(ipAddressParser.EOF, 0); }
+		public TerminalNode EOF() { return getToken(FirmwareVersionParser.EOF, 0); }
 		public ExpressionContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
 		}
 		@Override public int getRuleIndex() { return RULE_expression; }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof ipAddressListener ) ((ipAddressListener)listener).enterExpression(this);
+			if ( listener instanceof FirmwareVersionListener ) ((FirmwareVersionListener)listener).enterExpression(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof ipAddressListener ) ((ipAddressListener)listener).exitExpression(this);
+			if ( listener instanceof FirmwareVersionListener ) ((FirmwareVersionListener)listener).exitExpression(this);
 		}
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof ipAddressVisitor ) return ((ipAddressVisitor<? extends T>)visitor).visitExpression(this);
+			if ( visitor instanceof FirmwareVersionVisitor ) return ((FirmwareVersionVisitor<? extends T>)visitor).visitExpression(this);
 			else return visitor.visitChildren(this);
 		}
 	}
@@ -141,32 +143,32 @@ public class ipAddressParser extends Parser {
 	}
 
 	public static class Complex_expressionContext extends ParserRuleContext {
-		public TerminalNode IP_ADDRESS_SINGLE_EXPRESSION() { return getToken(ipAddressParser.IP_ADDRESS_SINGLE_EXPRESSION, 0); }
-		public TerminalNode IP_ADDRESS_SINGLE_PARTIAL_EXPRESSION() { return getToken(ipAddressParser.IP_ADDRESS_SINGLE_PARTIAL_EXPRESSION, 0); }
-		public List<TerminalNode> WHITESPACE() { return getTokens(ipAddressParser.WHITESPACE); }
+		public TerminalNode SEMANTIC_VERSION_EXPRESSION() { return getToken(FirmwareVersionParser.SEMANTIC_VERSION_EXPRESSION, 0); }
+		public TerminalNode PARTIAL_SEMANTIC_VERSION_EXPRESSION() { return getToken(FirmwareVersionParser.PARTIAL_SEMANTIC_VERSION_EXPRESSION, 0); }
+		public List<TerminalNode> WHITESPACE() { return getTokens(FirmwareVersionParser.WHITESPACE); }
 		public TerminalNode WHITESPACE(int i) {
-			return getToken(ipAddressParser.WHITESPACE, i);
+			return getToken(FirmwareVersionParser.WHITESPACE, i);
 		}
 		public Complex_expressionContext complex_expression() {
 			return getRuleContext(Complex_expressionContext.class,0);
 		}
-		public TerminalNode LOGIC_AND() { return getToken(ipAddressParser.LOGIC_AND, 0); }
-		public TerminalNode LOGIC_OR() { return getToken(ipAddressParser.LOGIC_OR, 0); }
+		public TerminalNode LOGIC_AND() { return getToken(FirmwareVersionParser.LOGIC_AND, 0); }
+		public TerminalNode LOGIC_OR() { return getToken(FirmwareVersionParser.LOGIC_OR, 0); }
 		public Complex_expressionContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
 		}
 		@Override public int getRuleIndex() { return RULE_complex_expression; }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof ipAddressListener ) ((ipAddressListener)listener).enterComplex_expression(this);
+			if ( listener instanceof FirmwareVersionListener ) ((FirmwareVersionListener)listener).enterComplex_expression(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof ipAddressListener ) ((ipAddressListener)listener).exitComplex_expression(this);
+			if ( listener instanceof FirmwareVersionListener ) ((FirmwareVersionListener)listener).exitComplex_expression(this);
 		}
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof ipAddressVisitor ) return ((ipAddressVisitor<? extends T>)visitor).visitComplex_expression(this);
+			if ( visitor instanceof FirmwareVersionVisitor ) return ((FirmwareVersionVisitor<? extends T>)visitor).visitComplex_expression(this);
 			else return visitor.visitChildren(this);
 		}
 	}
@@ -181,7 +183,7 @@ public class ipAddressParser extends Parser {
 			{
 			setState(7);
 			_la = _input.LA(1);
-			if ( !(_la==IP_ADDRESS_SINGLE_EXPRESSION || _la==IP_ADDRESS_SINGLE_PARTIAL_EXPRESSION) ) {
+			if ( !(_la==SEMANTIC_VERSION_EXPRESSION || _la==PARTIAL_SEMANTIC_VERSION_EXPRESSION) ) {
 			_errHandler.recoverInline(this);
 			}
 			else {
@@ -240,7 +242,7 @@ public class ipAddressParser extends Parser {
 			setState(24);
 			_errHandler.sync(this);
 			_la = _input.LA(1);
-			if (_la==IP_ADDRESS_SINGLE_EXPRESSION || _la==IP_ADDRESS_SINGLE_PARTIAL_EXPRESSION) {
+			if (_la==SEMANTIC_VERSION_EXPRESSION || _la==PARTIAL_SEMANTIC_VERSION_EXPRESSION) {
 				{
 				setState(23);
 				complex_expression();
@@ -261,26 +263,26 @@ public class ipAddressParser extends Parser {
 	}
 
 	public static final String _serializedATN =
-		"\u0004\u0001\r\u001b\u0002\u0000\u0007\u0000\u0002\u0001\u0007\u0001\u0001"+
-		"\u0000\u0001\u0000\u0001\u0000\u0001\u0001\u0001\u0001\u0005\u0001\n\b"+
-		"\u0001\n\u0001\f\u0001\r\t\u0001\u0001\u0001\u0003\u0001\u0010\b\u0001"+
+		"\u0004\u0001\u000e\u001b\u0002\u0000\u0007\u0000\u0002\u0001\u0007\u0001"+
+		"\u0001\u0000\u0001\u0000\u0001\u0000\u0001\u0001\u0001\u0001\u0005\u0001"+
+		"\n\b\u0001\n\u0001\f\u0001\r\t\u0001\u0001\u0001\u0003\u0001\u0010\b\u0001"+
 		"\u0001\u0001\u0005\u0001\u0013\b\u0001\n\u0001\f\u0001\u0016\t\u0001\u0001"+
 		"\u0001\u0003\u0001\u0019\b\u0001\u0001\u0001\u0000\u0000\u0002\u0000\u0002"+
-		"\u0000\u0002\u0001\u0000\t\n\u0001\u0000\u0006\u0007\u001c\u0000\u0004"+
-		"\u0001\u0000\u0000\u0000\u0002\u0007\u0001\u0000\u0000\u0000\u0004\u0005"+
-		"\u0003\u0002\u0001\u0000\u0005\u0006\u0005\u0000\u0000\u0001\u0006\u0001"+
-		"\u0001\u0000\u0000\u0000\u0007\u000b\u0007\u0000\u0000\u0000\b\n\u0005"+
-		"\f\u0000\u0000\t\b\u0001\u0000\u0000\u0000\n\r\u0001\u0000\u0000\u0000"+
-		"\u000b\t\u0001\u0000\u0000\u0000\u000b\f\u0001\u0000\u0000\u0000\f\u000f"+
-		"\u0001\u0000\u0000\u0000\r\u000b\u0001\u0000\u0000\u0000\u000e\u0010\u0007"+
-		"\u0001\u0000\u0000\u000f\u000e\u0001\u0000\u0000\u0000\u000f\u0010\u0001"+
-		"\u0000\u0000\u0000\u0010\u0014\u0001\u0000\u0000\u0000\u0011\u0013\u0005"+
-		"\f\u0000\u0000\u0012\u0011\u0001\u0000\u0000\u0000\u0013\u0016\u0001\u0000"+
-		"\u0000\u0000\u0014\u0012\u0001\u0000\u0000\u0000\u0014\u0015\u0001\u0000"+
-		"\u0000\u0000\u0015\u0018\u0001\u0000\u0000\u0000\u0016\u0014\u0001\u0000"+
-		"\u0000\u0000\u0017\u0019\u0003\u0002\u0001\u0000\u0018\u0017\u0001\u0000"+
-		"\u0000\u0000\u0018\u0019\u0001\u0000\u0000\u0000\u0019\u0003\u0001\u0000"+
-		"\u0000\u0000\u0004\u000b\u000f\u0014\u0018";
+		"\u0000\u0002\u0001\u0000\u000b\f\u0001\u0000\b\t\u001c\u0000\u0004\u0001"+
+		"\u0000\u0000\u0000\u0002\u0007\u0001\u0000\u0000\u0000\u0004\u0005\u0003"+
+		"\u0002\u0001\u0000\u0005\u0006\u0005\u0000\u0000\u0001\u0006\u0001\u0001"+
+		"\u0000\u0000\u0000\u0007\u000b\u0007\u0000\u0000\u0000\b\n\u0005\r\u0000"+
+		"\u0000\t\b\u0001\u0000\u0000\u0000\n\r\u0001\u0000\u0000\u0000\u000b\t"+
+		"\u0001\u0000\u0000\u0000\u000b\f\u0001\u0000\u0000\u0000\f\u000f\u0001"+
+		"\u0000\u0000\u0000\r\u000b\u0001\u0000\u0000\u0000\u000e\u0010\u0007\u0001"+
+		"\u0000\u0000\u000f\u000e\u0001\u0000\u0000\u0000\u000f\u0010\u0001\u0000"+
+		"\u0000\u0000\u0010\u0014\u0001\u0000\u0000\u0000\u0011\u0013\u0005\r\u0000"+
+		"\u0000\u0012\u0011\u0001\u0000\u0000\u0000\u0013\u0016\u0001\u0000\u0000"+
+		"\u0000\u0014\u0012\u0001\u0000\u0000\u0000\u0014\u0015\u0001\u0000\u0000"+
+		"\u0000\u0015\u0018\u0001\u0000\u0000\u0000\u0016\u0014\u0001\u0000\u0000"+
+		"\u0000\u0017\u0019\u0003\u0002\u0001\u0000\u0018\u0017\u0001\u0000\u0000"+
+		"\u0000\u0018\u0019\u0001\u0000\u0000\u0000\u0019\u0003\u0001\u0000\u0000"+
+		"\u0000\u0004\u000b\u000f\u0014\u0018";
 	public static final ATN _ATN =
 		new ATNDeserializer().deserialize(_serializedATN.toCharArray());
 	static {

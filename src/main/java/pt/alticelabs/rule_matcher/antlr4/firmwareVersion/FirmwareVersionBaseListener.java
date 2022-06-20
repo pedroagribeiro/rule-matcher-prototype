@@ -1,39 +1,40 @@
-// Generated from /Users/pedro/Code/rule_matcher/src/main/antlr4/ipAddress.g4 by ANTLR 4.10.1
+// Generated from /Users/pedro/Code/rule_matcher/src/main/antlr4/FirmwareVersion.g4 by ANTLR 4.10.1
+package pt.alticelabs.rule_matcher.antlr4.firmwareVersion;
 
 import org.antlr.v4.runtime.ParserRuleContext;
 import org.antlr.v4.runtime.tree.ErrorNode;
 import org.antlr.v4.runtime.tree.TerminalNode;
 
 /**
- * This class provides an empty implementation of {@link ipAddressListener},
+ * This class provides an empty implementation of {@link FirmwareVersionListener},
  * which can be extended to create a listener which only needs to handle a subset
  * of the available methods.
  */
-public class ipAddressBaseListener implements ipAddressListener {
+public class FirmwareVersionBaseListener implements FirmwareVersionListener {
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterExpression(ipAddressParser.ExpressionContext ctx) { }
+	@Override public void enterExpression(FirmwareVersionParser.ExpressionContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitExpression(ipAddressParser.ExpressionContext ctx) { }
+	@Override public void exitExpression(FirmwareVersionParser.ExpressionContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterComplex_expression(ipAddressParser.Complex_expressionContext ctx) { }
+	@Override public void enterComplex_expression(FirmwareVersionParser.Complex_expressionContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitComplex_expression(ipAddressParser.Complex_expressionContext ctx) { }
+	@Override public void exitComplex_expression(FirmwareVersionParser.Complex_expressionContext ctx) { }
 
 	/**
 	 * {@inheritDoc}

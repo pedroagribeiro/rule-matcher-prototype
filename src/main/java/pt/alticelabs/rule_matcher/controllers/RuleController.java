@@ -1,6 +1,12 @@
 package pt.alticelabs.rule_matcher.controllers;
 
 import javax.validation.Valid;
+
+import org.antlr.v4.runtime.BailErrorStrategy;
+import org.antlr.v4.runtime.CharStream;
+import org.antlr.v4.runtime.CharStreams;
+import org.antlr.v4.runtime.CommonTokenStream;
+import org.antlr.v4.runtime.misc.ParseCancellationException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,7 +17,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
+import pt.alticelabs.rule_matcher.antlr4.firmwareVersion.FirmwareVersionLexer;
+import pt.alticelabs.rule_matcher.antlr4.firmwareVersion.FirmwareVersionParser;
 import pt.alticelabs.rule_matcher.exceptions.InvalidFirmwareVersionExpressionException;
 import pt.alticelabs.rule_matcher.exceptions.InvalidIpAddressExpressionException;
 import pt.alticelabs.rule_matcher.model.EquipmentScenary;
@@ -76,5 +83,22 @@ public class RuleController {
         } else {
             return new ResponseEntity<>(matched_rule, HttpStatus.OK);
         }
+    }
+
+    @GetMapping("/antlr")
+    public ResponseEntity<?> testGrammar(@RequestBody String expression_string) {
+        CharStream cs = CharStreams.fromString(expression_string);
+        FirmwareVersionLexer ip_lexer = new FirmwareVersionLexer(cs);
+        CommonTokenStream commonTokenStream = new CommonTokenStream(ip_lexer);
+        FirmwareVersionParser firmwareVersionParser = new FirmwareVersionParser(commonTokenStream);
+        firmwareVersionParser.removeErrorListeners();
+        firmwareVersionParser.setErrorHandler(new BailErrorStrategy());
+        try {
+            firmwareVersionParser.expression();
+        } catch(ParseCancellationException e) {
+            e.printStackTrace();
+            return new ResponseEntity<>("The provided expression does ", HttpStatus.BAD_REQUEST);
+        }
+        return new ResponseEntity("Seems ok", HttpStatus.OK);
     }
 }

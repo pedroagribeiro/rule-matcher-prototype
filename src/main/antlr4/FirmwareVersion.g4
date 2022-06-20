@@ -1,4 +1,4 @@
-grammar firmwareVersion;
+grammar FirmwareVersion;
 
 /*
  * Parser rules

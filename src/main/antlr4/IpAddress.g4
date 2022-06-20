@@ -1,4 +1,4 @@
-grammar ipAddress;
+grammar IpAddress;
 
 /*
  * Parser rules
